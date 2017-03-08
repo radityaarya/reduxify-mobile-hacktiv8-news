@@ -1,10 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
+import { Provider} from 'react-redux';
+import { createStore, applyMiddleware} from 'redux';
+import rootReducers from './src/reducers'
+import App from './src/App'
+
 import {
   AppRegistry,
   StyleSheet,
@@ -12,42 +11,16 @@ import {
   View
 } from 'react-native';
 
-export default class reduxifyH8News extends Component {
+
+const createStoreMiddleware = applyMiddleware()(createStore)
+
+export default class ReduxifyH8News extends Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
+    return(
+      <Provider store={createStoreMiddleware(rootReducers)}>
+          <App />
+      </Provider>
+    )
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
-
-AppRegistry.registerComponent('reduxifyH8News', () => reduxifyH8News);
+AppRegistry.registerComponent('reduxifyH8News', () => ReduxifyH8News);
