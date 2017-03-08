@@ -1,0 +1,3 @@
+rootProject.name = 'reduxifyH8News'
+
+include ':app'
