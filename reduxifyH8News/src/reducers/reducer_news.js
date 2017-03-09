@@ -10,6 +10,8 @@ let data =  [
 export default (state=data, action) => {
   switch (action.type) {
     case 'NEWS_SEARCH':
+      console.log(data.filter((x)=> (x.title === null ? '' : x.title).match( new RegExp(action.payload, 'i')) )
+);
       return data.filter((x)=> (x.title === null ? '' : x.title).match( new RegExp(action.payload, 'i')) )
     default:
       return state

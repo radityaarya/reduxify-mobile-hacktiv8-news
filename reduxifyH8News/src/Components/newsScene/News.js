@@ -5,6 +5,7 @@ import { actionSearchNews } from '../../Actions/NEWS_SEARCH'
 import styles from '../../styles/index.styles'
 import {
   AppRegistry,
+  ListView,
   Navigator,
   Text,
   TextInput,
@@ -13,8 +14,21 @@ import {
 } from 'react-native';
 
 class News extends React.Component {
+  constructor(props){
+    super(props)
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows([...this.props.news]),
+    }
+  }
 
-  // buat kalo butuh aja
+  componentWillReceiveProps(nextProps){
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.setState({
+      dataSource: ds.cloneWithRows([...this.props.news]),
+    })
+  }
+
   handleChange(e){
     this.props.actionSearchNews(e.nativeEvent.text)
   }
@@ -33,22 +47,19 @@ class News extends React.Component {
              />
           </View>
 
-          <ScrollView>
-            {
-              this.props.news.map( (news, index) =>{
-                return (
-                  <View key={index} style={styles.newsList} >
-                    <Text style={styles.newstitle}>
-                      {news.title.toUpperCase()}
-                    </Text>
-                    <Text style={styles.newsPreview}>
-                      {news.prev.slice(0,50)}
-                    </Text>
-                  </View>
-                )
-              })
+          <ListView
+            dataSource={this.state.dataSource}
+            renderRow={(rowData, index) =>
+              <View key={index} style={styles.newsList} >
+                <Text style={rowData.newstitle}>
+                  {rowData.title.toUpperCase()}
+                </Text>
+                <Text style={styles.newsPreview}>
+                  {rowData.prev.slice(0,50)}
+                </Text>
+              </View>
             }
-          </ScrollView>
+          />
         </View>
       )
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import News from './Components/newsScene/NewsHeader'
+import News from './Components/newsScene/News'
 
 import styles from './styles/index.styles'
 import {
