@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 // import NewsScene from './Components/NewsScene'
 // import NewsScene from './src/NewsScene';
 
@@ -20,7 +21,15 @@ import {
 } from 'react-native';
 
 
+
+
 class App extends React.Component {
+
+  // buat kalo butuh aja
+  // handleChange(e){
+  //   this.props.actionSearchNews(e.nativeEvent.text)
+  // }
+
     render(){
       return(
         <View style={styles.news}>
@@ -31,8 +40,8 @@ class App extends React.Component {
             <TextInput
               style={styles.textInput}
               placeholder="search news here .. "
-              onChange={event => this.props.actionSearchNews(event.nativeEvent.text)}
-               />
+              onChange={e => this.props.actionSearchNews(e.nativeEvent.text)}
+             />
           </View>
 
           <ScrollView>
@@ -58,10 +67,14 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.news);
   return {
     news: state.news
   }
 }
 
-export default connect(mapStateToProps, null)(App)
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({actionSearchNews}, dispatch)
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
