@@ -1,80 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux';
-// import NewsScene from './Components/NewsScene'
-// import NewsScene from './src/NewsScene';
-
-// import NEWS actions ..
-import { actionSearchNews } from './Actions/NEWS_SEARCH'
-
-// import PEOPLE actions ..
-
+import News from './Components/newsScene/NewsHeader'
 
 import styles from './styles/index.styles'
 import {
-  AppRegistry,
-  Navigator,
-  Text,
-  TextInput,
-  ScrollView,
   View
 } from 'react-native';
 
-
-
-
-class App extends React.Component {
-
-  // buat kalo butuh aja
-  // handleChange(e){
-  //   this.props.actionSearchNews(e.nativeEvent.text)
-  // }
-
-    render(){
-      return(
-        <View style={styles.news}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>
-              Home
-            </Text>
-            <TextInput
-              style={styles.textInput}
-              placeholder="search news here .. "
-              onChange={e => this.props.actionSearchNews(e.nativeEvent.text)}
-             />
-          </View>
-
-          <ScrollView>
-            {
-              this.props.news.map( (news, index) =>{
-                return (
-                  <View key={index} style={styles.newsList} >
-                    <Text style={styles.newstitle}>
-                      {news.title.toUpperCase()}
-                    </Text>
-                    <Text style={styles.newsPreview}>
-                      {news.prev.slice(0,50)}
-                    </Text>
-                  </View>
-                )
-              })
-            }
-          </ScrollView>
-        </View>
-      )
-    }
-
+const App = () => {
+  return(
+    <View>
+      <News />
+    </View>
+  )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    news: state.news
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({actionSearchNews}, dispatch)
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default App
